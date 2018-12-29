@@ -1,3 +1,4 @@
+// Have different players in array and randomly pick array number
 var character = ['boy', 'cat-girl', 'horn-girl', 'pink-girl', 'princess-girl'];
 var charPick = Math.floor(Math.random() * 5);
 
@@ -112,7 +113,7 @@ enemyLocation.forEach(function (axisY) {
     allEnemies.push(enemy);
 });
 
-// The starting location of the player is located at x=200, y=405
+// The starting location of the player is located at x=200, y=405. Randomly picks which character plays the game.
 var player = new Player(200, 405, myPlayer(charPick));
 
 // This listens for key presses and sends the keys to your

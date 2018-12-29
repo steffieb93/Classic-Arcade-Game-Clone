@@ -1,5 +1,10 @@
 var character = ['boy', 'cat-girl', 'horn-girl', 'pink-girl', 'princess-girl'];
-//var charPick = Math.floor(Math.random() * 5);
+var charPick = Math.floor(Math.random() * 5);
+
+function myPlayer(num) {
+    var charPlayer = 'images/char-'.concat(character[num], '.png');
+    return charPlayer;
+}
 
 // Enemies our player must avoid
 var Enemy = function (x, y, speed) {
@@ -26,8 +31,8 @@ Enemy.prototype.update = function (dt) {
 
     // Checks for collisions between the player and the enemies
     if ((player.x < this.x + 70) && (player.x + 70 > this.x) && (player.y < this.y + 50) && (50 + player.y > this.y)) {
-        player.x = 202;
-        player.y = 405;
+        charPick = Math.floor(Math.random() * 5);
+        player = new Player(200, 405, myPlayer(charPick));
     };
 };
 
@@ -37,14 +42,13 @@ Enemy.prototype.render = function () {
 };
 
 // Player class focusing on x and y axis
-var Player = function (x, y) {
+var Player = function (x, y, char) {
     // Variables for the player to move along x and y axis
     this.x = x;
     this.y = y;
 
     //The image of the player is added to the playing field
-    var charPick = Math.floor(Math.random() * 5);
-    this.player = 'images/char-'.concat(character[charPick], '.png');
+    this.player = char;
 };
 
 Player.prototype.update = function (dt) {
@@ -62,33 +66,33 @@ Player.prototype.handleInput = function (keyPress) {
     // Enables user on left arrow key to move left on the x axis by 102
     // Also enables user not to go off the game tiles on the left side
     if (keyPress == 'left' && player.x > 2) {
-        player.x -= 100;
+        player.x -= 102;
     };
 
     // Enables user on right arrow key to move right on the x axis by 102
     // Also enables user not to go off the game tiles on the right side
     if (keyPress == 'right' && player.x < 400) {
-        player.x += 100;
+        player.x += 102;
     };
 
     // Enables user on up arrow key to move upwards on the y axis by 83
     if (keyPress == 'up' && player.y > -10) {
-        player.y -= 84;
+        player.y -= 83;
     };
 
     // Enables user on down arrow key to move downwards on the y axis by 83
     // Also enables user not to go off the game tiles on the bottom side
-    if (keyPress == 'down' && player.y < 400) {
-        player.y += 84;
+    if (keyPress == 'down' && player.y < 405) {
+        player.y += 83;
 
     };
 
     // Once the user reaches the top of the page; the water, the user is
     // Instantly reset to the starting position
-    if (this.y < 0) {
-        setTimeout(() => {
-            this.x = 200;
-            this.y = 400;
+    if (player.y < 0) {
+        setTimeout(function () {
+            charPick = Math.floor(Math.random() * 5);
+            player = new Player(200, 405, myPlayer(charPick));
         }, 400);
     };
 };
@@ -103,13 +107,13 @@ var enemyLocation = [63, 147, 230];
 
 // For each enemy located on the y axis from 0 on the x axis move at a speed of 200
 // Until randomly regenerated in the enemy update function above
-enemyLocation.forEach(function (locationY) {
-    enemy = new Enemy(0, locationY, 200);
+enemyLocation.forEach(function (axisY) {
+    enemy = new Enemy(0, axisY, 200);
     allEnemies.push(enemy);
 });
 
 // The starting location of the player is located at x=200, y=405
-var player = new Player(200, 400);
+var player = new Player(200, 405, myPlayer(charPick));
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method.

@@ -107,8 +107,6 @@ Player.prototype.handleInput = function (keyPress) {
             score += 1;
             document.getElementById('count').innerHTML = "<strong>Score: " + score + "</strong>";
         }
-
-        console.log(click);
     };
 };
 

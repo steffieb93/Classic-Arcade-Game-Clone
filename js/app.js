@@ -1,6 +1,8 @@
 // Have different players in array and randomly pick array number
 var character = ['boy', 'cat-girl', 'horn-girl', 'pink-girl', 'princess-girl'];
 var charPick = Math.floor(Math.random() * 5);
+var score = 0;
+var click = 0;
 
 function myPlayer(num) {
     var charPlayer = 'images/char-'.concat(character[num], '.png');
@@ -34,6 +36,9 @@ Enemy.prototype.update = function (dt) {
     if ((player.x < this.x + 70) && (player.x + 70 > this.x) && (player.y < this.y + 50) && (50 + player.y > this.y)) {
         charPick = Math.floor(Math.random() * 5);
         player = new Player(200, 405, myPlayer(charPick));
+
+        score = 0;
+        document.getElementById('count').innerHTML = "<strong>Score: " + score + "</strong>";
     };
 };
 
@@ -90,11 +95,20 @@ Player.prototype.handleInput = function (keyPress) {
 
     // Once the user reaches the top of the page; the water, the user is
     // Instantly reset to the starting position
-    if (player.y < 0) {
+    if (this.y < 0) {
         setTimeout(function () {
             charPick = Math.floor(Math.random() * 5);
             player = new Player(200, 405, myPlayer(charPick));
+            click = 0;
         }, 400);
+
+        click += 1;
+        if (click == 1) {
+            score += 1;
+            document.getElementById('count').innerHTML = "<strong>Score: " + score + "</strong>";
+        }
+
+        console.log(click);
     };
 };
 
